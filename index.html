@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#13294B" />
+    <link rel="icon" type="image/svg+xml" href="./logo.svg" />
+    <link rel="apple-touch-icon" href="./logo.svg" />
+    <title>Illini Wayfinder</title>
+    <script>
+      // Apply the saved theme before the page draws, so dark mode doesn't flash white first.
+      // src/theme.ts takes over once the app loads.
+      try {
+        const saved = JSON.parse(localStorage.getItem("wayfinder.settings.v1") || "{}");
+        const dark =
+          saved.appearance === "dark" ||
+          (saved.appearance !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+      } catch {
+        // Storage can be blocked; the app falls back to the default theme.
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
+    />
+    <script type="module" crossorigin src="./assets/index-COKQIgNz.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BuZuZoII.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <img class="brand-mark" src="./logo.svg" alt="" width="40" height="40" />
+        <div class="brand-text">
+          <h1>Illini Wayfinder</h1>
+          <p>Know when to leave for your next class</p>
+        </div>
+        <button type="button" class="settings-btn" id="openClasses" aria-haspopup="dialog">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 0 1 1-1zM4 10v9a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-9H4zm3 2h3v3H7v-3z"
+            />
+          </svg>
+          <span>Classes</span>
+        </button>
+        <button type="button" class="settings-btn" id="openSettings" aria-haspopup="dialog">
+          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              fill="currentColor"
+              d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6a.5.5 0 0 0 .1-.6l-2-3.5a.5.5 0 0 0-.6-.2l-2.5 1a7.3 7.3 0 0 0-1.7-1L14.4 2.4a.5.5 0 0 0-.5-.4h-4a.5.5 0 0 0-.5.4L9 5.1a7.3 7.3 0 0 0-1.7 1l-2.5-1a.5.5 0 0 0-.6.2l-2 3.5a.5.5 0 0 0 .1.6L4.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6a.5.5 0 0 0-.1.6l2 3.5c.1.2.4.3.6.2l2.5-1c.5.4 1.1.7 1.7 1l.4 2.7c0 .2.2.4.5.4h4c.3 0 .5-.2.5-.4l.4-2.7c.6-.3 1.2-.6 1.7-1l2.5 1c.2.1.5 0 .6-.2l2-3.5a.5.5 0 0 0-.1-.6zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"
+            />
+          </svg>
+          <span>Settings</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <div class="column">
+        <section id="status" class="status" aria-label="Next class"></section>
+
+        <section class="card">
+          <label for="startBuilding">Where are you now?</label>
+          <div class="location-buttons">
+            <button type="button" class="btn accent gps-btn" id="gpsButton" aria-pressed="false">Use my location</button>
+            <button type="button" class="btn ghost" id="pickOnMap">Pick on map</button>
+            <button type="button" class="btn ghost home-btn" id="homeButton" aria-label="Home">
+              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                <path fill="currentColor" d="M12 3 2 11.5l1.3 1.5L5 11.6V21h5v-6h4v6h5v-9.4l1.7 1.4 1.3-1.5L12 3z" />
+              </svg>
+            </button>
+          </div>
+          <p class="form-ok" id="placeStatus" role="status" hidden></p>
+          <form class="save-spot" id="saveSpot" hidden>
+            <label for="spotName">Save this pinned spot</label>
+            <div class="row">
+              <input type="text" id="spotName" placeholder="e.g. My apartment" autocomplete="off" />
+              <button type="submit" class="btn ghost save-btn">Save</button>
+            </div>
+            <button type="button" class="link-btn" id="saveSpotHome">Set as home instead</button>
+            <p id="saveSpotMessage" role="status" hidden></p>
+            <p class="hint">Drag the blue dot on the map to fine-tune the spot.</p>
+          </form>
+          <p id="gpsStatus" role="status" hidden></p>
+          <p class="or-line">or pick a building</p>
+          <select id="startBuilding" aria-label="Building you're in"></select>
+          <fieldset class="mode-field">
+            <legend>How are you getting there?</legend>
+            <div class="seg" id="modeChoices"></div>
+          </fieldset>
+          <p class="hint">
+            Times follow campus paths at the pace in Settings. They don't count stairs, doors, or waiting to cross.
+          </p>
+        </section>
+      </div>
+
+      <section class="card map-card" aria-labelledby="mapHeading">
+        <h2 id="mapHeading">Map</h2>
+        <div class="search">
+          <label for="buildingSearch" class="sr-only">Find a building</label>
+          <input
+            type="search"
+            id="buildingSearch"
+            placeholder="Find a building (try ECEB, Union, FLB)"
+            autocomplete="off"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded="false"
+            aria-controls="buildingResults"
+          />
+          <ul id="buildingResults" class="search-results" role="listbox" aria-label="Matching buildings" hidden></ul>
+        </div>
+        <div class="explore-bar" id="exploreBar" hidden>
+          <span id="exploreText"></span>
+          <button type="button" class="link-btn" id="exploreBack">Back to next class</button>
+        </div>
+        <div class="pick-bar" id="pickBar" role="status" hidden>
+          <span id="pickText"></span>
+          <button type="button" class="link-btn" id="pickCancel">Cancel</button>
+        </div>
+        <div id="map" class="map" role="region" aria-label="Campus map"></div>
+        <p class="hint" id="mapCaption"></p>
+      </section>
+    </main>
+
+    <footer class="foot">
+      Building locations, map, and paths © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>.
+      Bus times from the Champaign-Urbana Mass Transit District's published schedule; they don't show live delays.
+      Your schedule is saved only in this browser.
+    </footer>
+
+    <dialog class="settings-dialog classes-dialog" id="classesDialog" aria-labelledby="classesTitle">
+      <div class="dialog-head">
+        <h2 id="classesTitle">Your classes</h2>
+        <button type="button" class="dialog-close" id="closeClasses" aria-label="Close classes">&times;</button>
+      </div>
+      <div class="dialog-body">
+        <h3>Your schedule</h3>
+        <div class="undo" id="undoBar" hidden>
+          <span id="undoText"></span>
+          <button type="button" class="link-btn" id="undoBtn">Undo</button>
+        </div>
+        <ul class="class-list" id="classList"></ul>
+
+        <div class="import-box">
+          <h3>Import from Banner</h3>
+          <p class="hint">
+            Download your schedule from Banner's registration page (.ics), or print it and save as PDF.
+          </p>
+          <label class="btn accent file-btn">
+            Choose .ics or PDF file
+            <input type="file" id="importFile" accept=".ics,.pdf,text/calendar,application/pdf" />
+          </label>
+          <p id="importMessage" role="status" hidden></p>
+
+          <div id="importReview" class="review" hidden>
+            <h3>Check what was found</h3>
+            <p class="hint">Untick anything you don't want. You can edit any class after adding it.</p>
+            <ul class="review-list" id="reviewList"></ul>
+            <p class="hint" id="reviewSkipped" hidden></p>
+            <p class="form-error" id="reviewError" role="alert" hidden></p>
+            <div class="row">
+              <button type="button" class="btn accent" id="importAdd">Add classes</button>
+              <button type="button" class="btn ghost" id="importCancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+
+        <form id="classForm" novalidate>
+          <h3 id="formHeading">Add a class</h3>
+          <div class="field">
+            <label for="className">Class name</label>
+            <input type="text" id="className" placeholder="e.g. CS 124" autocomplete="off" maxlength="60" />
+          </div>
+          <div class="field">
+            <label for="classTitle">Full course name <span class="optional">(optional)</span></label>
+            <input
+              type="text"
+              id="classTitle"
+              placeholder="e.g. Intro to Computer Science I"
+              autocomplete="off"
+              maxlength="120"
+            />
+          </div>
+          <div class="field">
+            <label for="classKind">Type <span class="optional">(optional)</span></label>
+            <select id="classKind"></select>
+          </div>
+          <div class="field">
+            <span class="field-label" id="daysLabel">Days</span>
+            <div class="days" id="dayButtons" role="group" aria-labelledby="daysLabel"></div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="startTime">Starts</label>
+              <input type="time" id="startTime" />
+            </div>
+            <div class="field">
+              <label for="endTime">Ends</label>
+              <input type="time" id="endTime" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="classBuilding">Building</label>
+            <select id="classBuilding"></select>
+          </div>
+          <div class="field">
+            <label for="classRoom">Room <span class="optional">(optional)</span></label>
+            <input type="text" id="classRoom" placeholder="e.g. 1404" autocomplete="off" maxlength="20" />
+          </div>
+          <details class="field" id="classDates">
+            <summary>Only meets part of the semester?</summary>
+            <div class="row">
+              <div class="field">
+                <label for="firstDay">First day</label>
+                <input type="date" id="firstDay" />
+              </div>
+              <div class="field">
+                <label for="lastDay">Last day</label>
+                <input type="date" id="lastDay" />
+              </div>
+            </div>
+          </details>
+          <div class="row">
+            <button type="submit" class="btn accent" id="submitClass">Add class</button>
+            <button type="button" class="btn ghost" id="cancelEdit" hidden>Cancel</button>
+          </div>
+          <p class="form-error" id="formError" role="alert" hidden></p>
+          <p class="form-ok" id="formOk" role="status" hidden></p>
+        </form>
+      </div>
+    </dialog>
+
+    <dialog class="settings-dialog" id="settingsDialog" aria-labelledby="settingsTitle">
+      <div class="dialog-head">
+        <h2 id="settingsTitle">Settings</h2>
+        <button type="button" class="dialog-close" id="closeSettings" aria-label="Close settings">&times;</button>
+      </div>
+      <div class="dialog-body">
+        <fieldset>
+          <legend>Walking pace</legend>
+          <div class="seg" id="paceChoices"></div>
+          <p class="hint" id="paceHint"></p>
+        </fieldset>
+        <fieldset>
+          <legend>Biking speed</legend>
+          <div class="seg" id="bikeSpeedChoices"></div>
+          <p class="hint" id="bikeHint"></p>
+        </fieldset>
+        <fieldset>
+          <legend>Extra time before class</legend>
+          <div class="seg" id="extraChoices"></div>
+          <p class="hint" id="extraHint"></p>
+        </fieldset>
+        <fieldset>
+          <legend>Appearance</legend>
+          <div class="seg" id="appearanceChoices"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Accent colour</legend>
+          <div class="seg seg-wrap" id="accentChoices"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Your places</legend>
+          <ul class="class-list places-list" id="placesList"></ul>
+        </fieldset>
+        <fieldset>
+          <legend>Your data</legend>
+          <p class="hint backup-hint">
+            Your schedule and settings are saved only in this browser. Download a backup to move them to another
+            computer, or to get them back if this browser's data is cleared.
+          </p>
+          <div class="row">
+            <button type="button" class="btn ghost" id="backupDownload">Download backup</button>
+            <label class="btn ghost file-btn">
+              Restore from backup
+              <input type="file" id="backupFile" accept=".json,application/json" />
+            </label>
+          </div>
+          <p id="backupMessage" role="status" hidden></p>
+          <div class="confirm-box" id="backupConfirm" hidden>
+            <p id="backupConfirmText"></p>
+            <div class="row">
+              <button type="button" class="btn accent" id="backupReplace">Replace with backup</button>
+              <button type="button" class="btn ghost" id="backupCancel">Cancel</button>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Reset</legend>
+          <div class="reset-buttons">
+            <button type="button" class="btn danger" id="resetSettings">Reset settings</button>
+            <button type="button" class="btn danger" id="resetClasses">Remove classes</button>
+            <button type="button" class="btn danger" id="resetEverything">Reset everything</button>
+          </div>
+          <div class="confirm-box danger-box" id="resetConfirm" role="alertdialog" aria-labelledby="resetConfirmText" hidden>
+            <p id="resetConfirmText"></p>
+            <div class="row">
+              <button type="button" class="btn danger solid" id="resetYes">Yes, reset</button>
+              <button type="button" class="btn ghost" id="resetCancel">Cancel</button>
+            </div>
+          </div>
+          <p class="form-ok" id="resetMessage" role="status" hidden></p>
+        </fieldset>
+      </div>
+    </dialog>
+
+  </body>
+</html>
