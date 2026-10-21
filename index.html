@@ -26,8 +26,8 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
     />
-    <script type="module" crossorigin src="./assets/index-U-vpRepY.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DpXnUiOh.css">
+    <script type="module" crossorigin src="./assets/index-Dkey2xq1.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-A0zmkKCO.css">
   </head>
   <body>
     <header class="topbar">
@@ -57,6 +57,8 @@
         </button>
       </div>
     </header>
+
+    <div class="hazard-banner" id="hazardBanner" role="region" aria-label="Weather warnings" aria-live="polite" hidden></div>
 
     <main class="layout">
       <div class="column">
@@ -129,7 +131,8 @@
     <footer class="foot">
       Building locations, map, and paths © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>.
       Bus times from the Champaign-Urbana Mass Transit District's published schedule; they don't show live delays.
-      Weather forecast by <a href="https://open-meteo.com/">Open-Meteo.com</a>, for campus as a whole (your location is never sent).
+      Weather forecast by <a href="https://open-meteo.com/">Open-Meteo.com</a> and warnings from the
+      <a href="https://www.weather.gov/">National Weather Service</a>, for campus as a whole (your location is never sent).
       Your schedule is saved only in this browser.
     </footer>
 
@@ -261,6 +264,16 @@
           <div class="seg" id="weatherChoices"></div>
           <p class="hint" id="weatherHint"></p>
           <div class="weather-panel" id="weatherPanel" aria-live="polite"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Weather warnings</legend>
+          <div class="seg" id="weatherWarningsChoices"></div>
+          <p class="hint">
+            A banner at the top of the app for official National Weather Service warnings for campus, and for
+            thunderstorms, ice, heavy snow, very strong wind, or dangerous cold or heat in the forecast for the next 12 hours.
+          </p>
+          <p class="hint warnings-status" id="warningsStatus" role="status"></p>
+          <button type="button" class="btn ghost" id="showHiddenWarnings" hidden>Show hidden warnings</button>
         </fieldset>
         <fieldset>
           <legend>Appearance</legend>
