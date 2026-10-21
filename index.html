@@ -26,8 +26,8 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
     />
-    <script type="module" crossorigin src="./assets/index-DT_AXmCx.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BxA0y248.css">
+    <script type="module" crossorigin src="./assets/index-U-vpRepY.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DpXnUiOh.css">
   </head>
   <body>
     <header class="topbar">
@@ -129,6 +129,7 @@
     <footer class="foot">
       Building locations, map, and paths © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>.
       Bus times from the Champaign-Urbana Mass Transit District's published schedule; they don't show live delays.
+      Weather forecast by <a href="https://open-meteo.com/">Open-Meteo.com</a>, for campus as a whole (your location is never sent).
       Your schedule is saved only in this browser.
     </footer>
 
@@ -254,6 +255,12 @@
           <legend>Extra time before class</legend>
           <div class="seg" id="extraChoices"></div>
           <p class="hint" id="extraHint"></p>
+        </fieldset>
+        <fieldset>
+          <legend>Weather</legend>
+          <div class="seg" id="weatherChoices"></div>
+          <p class="hint" id="weatherHint"></p>
+          <div class="weather-panel" id="weatherPanel" aria-live="polite"></div>
         </fieldset>
         <fieldset>
           <legend>Appearance</legend>
