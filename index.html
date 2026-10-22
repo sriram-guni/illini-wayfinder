@@ -26,8 +26,8 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
     />
-    <script type="module" crossorigin src="./assets/index-BEAkm7nP.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BOpzR7qC.css">
+    <script type="module" crossorigin src="./assets/index-BVT_r_aQ.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CZm2Crwr.css">
   </head>
   <body>
     <header class="topbar">
@@ -59,10 +59,10 @@
           <select id="startBuilding"></select>
           <div class="location-buttons">
             <button type="button" class="btn ghost small-btn gps-btn" id="gpsButton" aria-pressed="false">
-              <span data-icon="locate"></span><span class="btn-text">My location</span>
+              <span data-icon="locate"></span><span class="btn-text">My Location</span>
             </button>
             <button type="button" class="btn ghost small-btn" id="pickOnMap">
-              <span data-icon="pin"></span><span class="btn-text">Pick on map</span>
+              <span data-icon="pin"></span><span class="btn-text">Pick on Map</span>
             </button>
             <button type="button" class="btn ghost small-btn home-btn" id="homeButton" aria-label="Home">
               <span data-icon="home"></span>
@@ -70,12 +70,12 @@
           </div>
           <p class="form-ok" id="placeStatus" role="status" hidden></p>
           <form class="save-spot" id="saveSpot" hidden>
-            <label for="spotName">Save this pinned spot</label>
+            <label for="spotName">Save This Pinned Spot</label>
             <div class="row">
               <input type="text" id="spotName" placeholder="e.g. My apartment" autocomplete="off" />
               <button type="submit" class="btn ghost save-btn">Save</button>
             </div>
-            <button type="button" class="link-btn" id="saveSpotHome">Set as home instead</button>
+            <button type="button" class="link-btn" id="saveSpotHome">Set as Home Instead</button>
             <p id="saveSpotMessage" role="status" hidden></p>
             <p class="hint">Drag the blue dot on the map to fine-tune the spot.</p>
           </form>
@@ -89,11 +89,11 @@
 
       <section class="map-section" aria-label="Map">
         <div class="search">
-          <label for="buildingSearch" class="sr-only">Find a building</label>
+          <label for="buildingSearch" class="sr-only">Find a Building, Place, or Address</label>
           <input
             type="search"
             id="buildingSearch"
-            placeholder="Find a building (try ECEB, Union, FLB)"
+            placeholder="Find a building, place, or address (try ECEB, Seven07)"
             autocomplete="off"
             role="combobox"
             aria-autocomplete="list"
@@ -105,7 +105,9 @@
         <div class="explore-bar" id="exploreBar" hidden>
           <span data-icon="pin" class="icon bar-icon"></span>
           <span id="exploreText"></span>
-          <button type="button" class="link-btn" id="exploreBack">Back to next class</button>
+          <button type="button" class="btn accent small-btn" id="exploreHere">I'm Here</button>
+          <button type="button" class="btn ghost small-btn" id="exploreSave">Save</button>
+          <button type="button" class="link-btn" id="exploreBack">Back to Next Class</button>
         </div>
         <div class="pick-bar" id="pickBar" role="status" hidden>
           <span data-icon="locate" class="icon bar-icon"></span>
@@ -118,8 +120,10 @@
     </main>
 
     <footer class="foot">
-      Building locations, map, and paths © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>.
+      Map, building locations, and paths © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>; map
+      tiles by <a href="https://openfreemap.org/">OpenFreeMap</a> and <a href="https://openmaptiles.org/">OpenMapTiles</a>.
       Bus times from the Champaign-Urbana Mass Transit District's published schedule; they don't show live delays.
+      Address search by <a href="https://nominatim.org/">Nominatim</a>: only the address you search for is sent to it.
       Weather forecast by <a href="https://open-meteo.com/">Open-Meteo.com</a> and warnings from the
       <a href="https://www.weather.gov/">National Weather Service</a>, for campus as a whole (your location is never sent).
       Your schedule is saved only in this browser.
@@ -127,13 +131,13 @@
 
     <dialog class="settings-dialog classes-dialog" id="classesDialog" aria-labelledby="classesTitle">
       <div class="dialog-head">
-        <h2 id="classesTitle">Your classes</h2>
+        <h2 id="classesTitle">Your Classes</h2>
         <button type="button" class="dialog-close" id="closeClasses" aria-label="Close classes">&times;</button>
       </div>
       <div class="dialog-body">
         <div id="classesListView">
           <div class="list-actions">
-            <button type="button" class="btn accent small-btn" id="showAddClass">+ Add class</button>
+            <button type="button" class="btn accent small-btn" id="showAddClass">+ Add Class</button>
             <button type="button" class="btn ghost small-btn" id="showImport">Import from Banner</button>
           </div>
           <p class="form-ok" id="classesMessage" role="status" hidden></p>
@@ -145,26 +149,26 @@
 
         </div>
         <div id="classesImportView" hidden>
-          <button type="button" class="link-btn back-btn" data-back-to-list><span data-icon="back"></span>Your classes</button>
+          <button type="button" class="link-btn back-btn" data-back-to-list><span data-icon="back"></span>Your Classes</button>
           <div class="import-box">
             <h3 tabindex="-1">Import from Banner</h3>
             <p class="hint">
               Download your schedule from Banner's registration page (.ics), or print it and save as PDF.
             </p>
             <label class="btn accent file-btn">
-              Choose .ics or PDF file
+              Choose .ics or PDF File
               <input type="file" id="importFile" accept=".ics,.pdf,text/calendar,application/pdf" />
             </label>
             <p id="importMessage" role="status" hidden></p>
 
             <div id="importReview" class="review" hidden>
-              <h3>Check what was found</h3>
+              <h3>Check What Was Found</h3>
               <p class="hint">Untick anything you don't want. You can edit any class after adding it.</p>
               <ul class="review-list" id="reviewList"></ul>
               <p class="hint" id="reviewSkipped" hidden></p>
               <p class="form-error" id="reviewError" role="alert" hidden></p>
               <div class="row">
-                <button type="button" class="btn accent" id="importAdd">Add classes</button>
+                <button type="button" class="btn accent" id="importAdd">Add Classes</button>
                 <button type="button" class="btn ghost" id="importCancel">Cancel</button>
               </div>
             </div>
@@ -172,15 +176,15 @@
 
         </div>
         <div id="classesFormView" hidden>
-          <button type="button" class="link-btn back-btn" data-back-to-list><span data-icon="back"></span>Your classes</button>
+          <button type="button" class="link-btn back-btn" data-back-to-list><span data-icon="back"></span>Your Classes</button>
           <form id="classForm" novalidate>
-            <h3 id="formHeading" tabindex="-1">Add a class</h3>
+            <h3 id="formHeading" tabindex="-1">Add a Class</h3>
             <div class="field">
-              <label for="className">Class name</label>
+              <label for="className">Class Name</label>
               <input type="text" id="className" placeholder="e.g. CS 124" autocomplete="off" maxlength="60" />
             </div>
             <div class="field">
-              <label for="classTitle">Full course name <span class="optional">(optional)</span></label>
+              <label for="classTitle">Full Course Name <span class="optional">(optional)</span></label>
               <input
                 type="text"
                 id="classTitle"
@@ -216,7 +220,7 @@
               <input type="text" id="classRoom" placeholder="e.g. 1404" autocomplete="off" maxlength="20" />
             </div>
             <div class="field">
-              <label for="classExtra">Extra minutes for this class <span class="optional">(optional)</span></label>
+              <label for="classExtra">Extra Minutes for This Class <span class="optional">(optional)</span></label>
               <input type="number" id="classExtra" min="0" max="60" step="1" inputmode="numeric" placeholder="0" aria-describedby="classExtraHint" />
               <p class="hint" id="classExtraHint">
                 For a room that's hard to find, a lecture hall where seats fill up early, or a long walk inside the
@@ -227,17 +231,17 @@
               <summary>Only meets part of the semester?</summary>
               <div class="row">
                 <div class="field">
-                  <label for="firstDay">First day</label>
+                  <label for="firstDay">First Day</label>
                   <input type="date" id="firstDay" />
                 </div>
                 <div class="field">
-                  <label for="lastDay">Last day</label>
+                  <label for="lastDay">Last Day</label>
                   <input type="date" id="lastDay" />
                 </div>
               </div>
             </details>
             <div class="row">
-              <button type="submit" class="btn accent" id="submitClass">Add class</button>
+              <button type="submit" class="btn accent" id="submitClass">Add Class</button>
               <button type="button" class="btn ghost" id="cancelEdit">Cancel</button>
             </div>
             <p class="form-error" id="formError" role="alert" hidden></p>
@@ -255,28 +259,28 @@
           <button type="button" role="tab" class="tab" id="tab-travel" aria-controls="settings-travel">Travel</button>
           <button type="button" role="tab" class="tab" id="tab-weather" aria-controls="settings-weather">Weather</button>
           <button type="button" role="tab" class="tab" id="tab-look" aria-controls="settings-look">Appearance</button>
-          <button type="button" role="tab" class="tab" id="tab-data" aria-controls="settings-data">Your data</button>
+          <button type="button" role="tab" class="tab" id="tab-data" aria-controls="settings-data">Your Data</button>
         </div>
       </div>
       <div class="dialog-body">
         <section class="tab-panel" id="settings-travel" role="tabpanel" aria-labelledby="tab-travel" tabindex="0">
           <fieldset>
-            <legend>Walking pace</legend>
+            <legend>Walking Pace</legend>
             <div class="seg" id="paceChoices"></div>
             <p class="hint" id="paceHint"></p>
           </fieldset>
           <fieldset>
-            <legend>Biking speed</legend>
+            <legend>Biking Speed</legend>
             <div class="seg" id="bikeSpeedChoices"></div>
             <p class="hint" id="bikeHint"></p>
           </fieldset>
           <fieldset>
-            <legend>Extra time before class</legend>
+            <legend>Extra Time Before Class</legend>
             <div class="seg" id="extraChoices"></div>
             <p class="hint" id="extraHint"></p>
           </fieldset>
           <fieldset>
-            <legend>Your places</legend>
+            <legend>Your Places</legend>
             <ul class="class-list places-list" id="placesList"></ul>
           </fieldset>
         </section>
@@ -288,14 +292,14 @@
             <div class="weather-panel" id="weatherPanel" aria-live="polite"></div>
           </fieldset>
           <fieldset>
-            <legend>Weather warnings</legend>
+            <legend>Weather Warnings</legend>
             <div class="seg" id="weatherWarningsChoices"></div>
             <p class="hint">
               A banner at the top for official National Weather Service warnings, and for storms, ice, heavy snow, strong
               wind, or dangerous cold or heat in the next 12 hours.
             </p>
             <p class="hint warnings-status" id="warningsStatus" role="status"></p>
-            <button type="button" class="btn ghost" id="showHiddenWarnings" hidden>Show hidden warnings</button>
+            <button type="button" class="btn ghost" id="showHiddenWarnings" hidden>Show Hidden Warnings</button>
           </fieldset>
         </section>
         <section class="tab-panel" id="settings-look" role="tabpanel" aria-labelledby="tab-look" tabindex="0">
@@ -304,11 +308,11 @@
             <div class="seg" id="appearanceChoices"></div>
           </fieldset>
           <fieldset>
-            <legend>Accent colour</legend>
+            <legend>Accent Colour</legend>
             <div class="seg seg-wrap" id="accentChoices"></div>
           </fieldset>
           <fieldset>
-            <legend>Campus area on the map</legend>
+            <legend>Campus Area on the Map</legend>
             <div class="seg" id="campusRingChoices"></div>
             <p class="hint">
               A dashed ring on the map, 4 km around the Main Quad. Locations outside it (GPS or a pinned spot) are
@@ -324,9 +328,9 @@
               computer, or to get them back if this browser's data is cleared.
             </p>
             <div class="row">
-              <button type="button" class="btn ghost" id="backupDownload">Download backup</button>
+              <button type="button" class="btn ghost" id="backupDownload">Download Backup</button>
               <label class="btn ghost file-btn">
-                Restore from backup
+                Restore from Backup
                 <input type="file" id="backupFile" accept=".json,application/json" />
               </label>
             </div>
@@ -334,7 +338,7 @@
             <div class="confirm-box" id="backupConfirm" hidden>
               <p id="backupConfirmText"></p>
               <div class="row">
-                <button type="button" class="btn accent" id="backupReplace">Replace with backup</button>
+                <button type="button" class="btn accent" id="backupReplace">Replace with Backup</button>
                 <button type="button" class="btn ghost" id="backupCancel">Cancel</button>
               </div>
             </div>
@@ -342,14 +346,14 @@
           <fieldset class="reset-field">
             <legend>Reset</legend>
             <div class="reset-buttons">
-              <button type="button" class="btn ghost danger" id="resetSettings">Reset settings</button>
-              <button type="button" class="btn ghost danger" id="resetClasses">Remove classes</button>
-              <button type="button" class="btn ghost danger" id="resetEverything">Reset everything</button>
+              <button type="button" class="btn ghost danger" id="resetSettings">Reset Settings</button>
+              <button type="button" class="btn ghost danger" id="resetClasses">Remove Classes</button>
+              <button type="button" class="btn ghost danger" id="resetEverything">Reset Everything</button>
             </div>
             <div class="confirm-box danger-box" id="resetConfirm" role="alertdialog" aria-labelledby="resetConfirmText" hidden>
               <p id="resetConfirmText"></p>
               <div class="row">
-                <button type="button" class="btn danger solid" id="resetYes">Yes, reset</button>
+                <button type="button" class="btn danger solid" id="resetYes">Yes, Reset</button>
                 <button type="button" class="btn ghost" id="resetCancel">Cancel</button>
               </div>
             </div>
