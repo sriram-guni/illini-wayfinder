@@ -26,8 +26,8 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
     />
-    <script type="module" crossorigin src="./assets/index-Dkey2xq1.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-A0zmkKCO.css">
+    <script type="module" crossorigin src="./assets/index-BEAkm7nP.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BOpzR7qC.css">
   </head>
   <body>
     <header class="topbar">
@@ -35,24 +35,14 @@
         <img class="brand-mark" src="./logo.svg" alt="" width="40" height="40" />
         <div class="brand-text">
           <h1>Illini Wayfinder</h1>
-          <p>Know when to leave for your next class</p>
+          <p class="tagline">Know when to leave for your next class</p>
         </div>
         <button type="button" class="settings-btn" id="openClasses" aria-haspopup="dialog">
-          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              fill="currentColor"
-              d="M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h1V3a1 1 0 0 1 1-1zM4 10v9a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-9H4zm3 2h3v3H7v-3z"
-            />
-          </svg>
+          <span data-icon="calendar"></span>
           <span>Classes</span>
         </button>
         <button type="button" class="settings-btn" id="openSettings" aria-haspopup="dialog">
-          <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              fill="currentColor"
-              d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6a.5.5 0 0 0 .1-.6l-2-3.5a.5.5 0 0 0-.6-.2l-2.5 1a7.3 7.3 0 0 0-1.7-1L14.4 2.4a.5.5 0 0 0-.5-.4h-4a.5.5 0 0 0-.5.4L9 5.1a7.3 7.3 0 0 0-1.7 1l-2.5-1a.5.5 0 0 0-.6.2l-2 3.5a.5.5 0 0 0 .1.6L4.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6a.5.5 0 0 0-.1.6l2 3.5c.1.2.4.3.6.2l2.5-1c.5.4 1.1.7 1.7 1l.4 2.7c0 .2.2.4.5.4h4c.3 0 .5-.2.5-.4l.4-2.7c.6-.3 1.2-.6 1.7-1l2.5 1c.2.1.5 0 .6-.2l2-3.5a.5.5 0 0 0-.1-.6zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"
-            />
-          </svg>
+          <span data-icon="gear"></span>
           <span>Settings</span>
         </button>
       </div>
@@ -64,15 +54,18 @@
       <div class="column">
         <section id="status" class="status" aria-label="Next class"></section>
 
-        <section class="card">
-          <label for="startBuilding">Where are you now?</label>
+        <section class="trip-controls" aria-label="Where you are and how you're getting there">
+          <label for="startBuilding" class="section-label">From</label>
+          <select id="startBuilding"></select>
           <div class="location-buttons">
-            <button type="button" class="btn accent gps-btn" id="gpsButton" aria-pressed="false">Use my location</button>
-            <button type="button" class="btn ghost" id="pickOnMap">Pick on map</button>
-            <button type="button" class="btn ghost home-btn" id="homeButton" aria-label="Home">
-              <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="currentColor" d="M12 3 2 11.5l1.3 1.5L5 11.6V21h5v-6h4v6h5v-9.4l1.7 1.4 1.3-1.5L12 3z" />
-              </svg>
+            <button type="button" class="btn ghost small-btn gps-btn" id="gpsButton" aria-pressed="false">
+              <span data-icon="locate"></span><span class="btn-text">My location</span>
+            </button>
+            <button type="button" class="btn ghost small-btn" id="pickOnMap">
+              <span data-icon="pin"></span><span class="btn-text">Pick on map</span>
+            </button>
+            <button type="button" class="btn ghost small-btn home-btn" id="homeButton" aria-label="Home">
+              <span data-icon="home"></span>
             </button>
           </div>
           <p class="form-ok" id="placeStatus" role="status" hidden></p>
@@ -87,20 +80,14 @@
             <p class="hint">Drag the blue dot on the map to fine-tune the spot.</p>
           </form>
           <p id="gpsStatus" role="status" hidden></p>
-          <p class="or-line">or pick a building</p>
-          <select id="startBuilding" aria-label="Building you're in"></select>
           <fieldset class="mode-field">
-            <legend>How are you getting there?</legend>
+            <legend class="sr-only">How are you getting there?</legend>
             <div class="seg" id="modeChoices"></div>
           </fieldset>
-          <p class="hint">
-            Times follow campus paths at the pace in Settings. They don't count stairs, doors, or waiting to cross.
-          </p>
         </section>
       </div>
 
-      <section class="card map-card" aria-labelledby="mapHeading">
-        <h2 id="mapHeading">Map</h2>
+      <section class="map-section" aria-label="Map">
         <div class="search">
           <label for="buildingSearch" class="sr-only">Find a building</label>
           <input
@@ -116,10 +103,12 @@
           <ul id="buildingResults" class="search-results" role="listbox" aria-label="Matching buildings" hidden></ul>
         </div>
         <div class="explore-bar" id="exploreBar" hidden>
+          <span data-icon="pin" class="icon bar-icon"></span>
           <span id="exploreText"></span>
           <button type="button" class="link-btn" id="exploreBack">Back to next class</button>
         </div>
         <div class="pick-bar" id="pickBar" role="status" hidden>
+          <span data-icon="locate" class="icon bar-icon"></span>
           <span id="pickText"></span>
           <button type="button" class="link-btn" id="pickCancel">Cancel</button>
         </div>
@@ -142,99 +131,119 @@
         <button type="button" class="dialog-close" id="closeClasses" aria-label="Close classes">&times;</button>
       </div>
       <div class="dialog-body">
-        <h3>Your schedule</h3>
-        <div class="undo" id="undoBar" hidden>
-          <span id="undoText"></span>
-          <button type="button" class="link-btn" id="undoBtn">Undo</button>
+        <div id="classesListView">
+          <div class="list-actions">
+            <button type="button" class="btn accent small-btn" id="showAddClass">+ Add class</button>
+            <button type="button" class="btn ghost small-btn" id="showImport">Import from Banner</button>
+          </div>
+          <p class="form-ok" id="classesMessage" role="status" hidden></p>
+          <div class="undo" id="undoBar" hidden>
+            <span id="undoText"></span>
+            <button type="button" class="link-btn" id="undoBtn">Undo</button>
+          </div>
+          <ul class="class-list" id="classList"></ul>
+
         </div>
-        <ul class="class-list" id="classList"></ul>
+        <div id="classesImportView" hidden>
+          <button type="button" class="link-btn back-btn" data-back-to-list><span data-icon="back"></span>Your classes</button>
+          <div class="import-box">
+            <h3 tabindex="-1">Import from Banner</h3>
+            <p class="hint">
+              Download your schedule from Banner's registration page (.ics), or print it and save as PDF.
+            </p>
+            <label class="btn accent file-btn">
+              Choose .ics or PDF file
+              <input type="file" id="importFile" accept=".ics,.pdf,text/calendar,application/pdf" />
+            </label>
+            <p id="importMessage" role="status" hidden></p>
 
-        <div class="import-box">
-          <h3>Import from Banner</h3>
-          <p class="hint">
-            Download your schedule from Banner's registration page (.ics), or print it and save as PDF.
-          </p>
-          <label class="btn accent file-btn">
-            Choose .ics or PDF file
-            <input type="file" id="importFile" accept=".ics,.pdf,text/calendar,application/pdf" />
-          </label>
-          <p id="importMessage" role="status" hidden></p>
-
-          <div id="importReview" class="review" hidden>
-            <h3>Check what was found</h3>
-            <p class="hint">Untick anything you don't want. You can edit any class after adding it.</p>
-            <ul class="review-list" id="reviewList"></ul>
-            <p class="hint" id="reviewSkipped" hidden></p>
-            <p class="form-error" id="reviewError" role="alert" hidden></p>
-            <div class="row">
-              <button type="button" class="btn accent" id="importAdd">Add classes</button>
-              <button type="button" class="btn ghost" id="importCancel">Cancel</button>
-            </div>
-          </div>
-        </div>
-
-        <form id="classForm" novalidate>
-          <h3 id="formHeading">Add a class</h3>
-          <div class="field">
-            <label for="className">Class name</label>
-            <input type="text" id="className" placeholder="e.g. CS 124" autocomplete="off" maxlength="60" />
-          </div>
-          <div class="field">
-            <label for="classTitle">Full course name <span class="optional">(optional)</span></label>
-            <input
-              type="text"
-              id="classTitle"
-              placeholder="e.g. Intro to Computer Science I"
-              autocomplete="off"
-              maxlength="120"
-            />
-          </div>
-          <div class="field">
-            <label for="classKind">Type <span class="optional">(optional)</span></label>
-            <select id="classKind"></select>
-          </div>
-          <div class="field">
-            <span class="field-label" id="daysLabel">Days</span>
-            <div class="days" id="dayButtons" role="group" aria-labelledby="daysLabel"></div>
-          </div>
-          <div class="row">
-            <div class="field">
-              <label for="startTime">Starts</label>
-              <input type="time" id="startTime" />
-            </div>
-            <div class="field">
-              <label for="endTime">Ends</label>
-              <input type="time" id="endTime" />
-            </div>
-          </div>
-          <div class="field">
-            <label for="classBuilding">Building</label>
-            <select id="classBuilding"></select>
-          </div>
-          <div class="field">
-            <label for="classRoom">Room <span class="optional">(optional)</span></label>
-            <input type="text" id="classRoom" placeholder="e.g. 1404" autocomplete="off" maxlength="20" />
-          </div>
-          <details class="field" id="classDates">
-            <summary>Only meets part of the semester?</summary>
-            <div class="row">
-              <div class="field">
-                <label for="firstDay">First day</label>
-                <input type="date" id="firstDay" />
-              </div>
-              <div class="field">
-                <label for="lastDay">Last day</label>
-                <input type="date" id="lastDay" />
+            <div id="importReview" class="review" hidden>
+              <h3>Check what was found</h3>
+              <p class="hint">Untick anything you don't want. You can edit any class after adding it.</p>
+              <ul class="review-list" id="reviewList"></ul>
+              <p class="hint" id="reviewSkipped" hidden></p>
+              <p class="form-error" id="reviewError" role="alert" hidden></p>
+              <div class="row">
+                <button type="button" class="btn accent" id="importAdd">Add classes</button>
+                <button type="button" class="btn ghost" id="importCancel">Cancel</button>
               </div>
             </div>
-          </details>
-          <div class="row">
-            <button type="submit" class="btn accent" id="submitClass">Add class</button>
-            <button type="button" class="btn ghost" id="cancelEdit" hidden>Cancel</button>
           </div>
-          <p class="form-error" id="formError" role="alert" hidden></p>
-          <p class="form-ok" id="formOk" role="status" hidden></p>
-        </form>
+
+        </div>
+        <div id="classesFormView" hidden>
+          <button type="button" class="link-btn back-btn" data-back-to-list><span data-icon="back"></span>Your classes</button>
+          <form id="classForm" novalidate>
+            <h3 id="formHeading" tabindex="-1">Add a class</h3>
+            <div class="field">
+              <label for="className">Class name</label>
+              <input type="text" id="className" placeholder="e.g. CS 124" autocomplete="off" maxlength="60" />
+            </div>
+            <div class="field">
+              <label for="classTitle">Full course name <span class="optional">(optional)</span></label>
+              <input
+                type="text"
+                id="classTitle"
+                placeholder="e.g. Intro to Computer Science I"
+                autocomplete="off"
+                maxlength="120"
+              />
+            </div>
+            <div class="field">
+              <label for="classKind">Type <span class="optional">(optional)</span></label>
+              <select id="classKind"></select>
+            </div>
+            <div class="field">
+              <span class="field-label" id="daysLabel">Days</span>
+              <div class="days" id="dayButtons" role="group" aria-labelledby="daysLabel"></div>
+            </div>
+            <div class="row">
+              <div class="field">
+                <label for="startTime">Starts</label>
+                <input type="time" id="startTime" />
+              </div>
+              <div class="field">
+                <label for="endTime">Ends</label>
+                <input type="time" id="endTime" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="classBuilding">Building</label>
+              <select id="classBuilding"></select>
+            </div>
+            <div class="field">
+              <label for="classRoom">Room <span class="optional">(optional)</span></label>
+              <input type="text" id="classRoom" placeholder="e.g. 1404" autocomplete="off" maxlength="20" />
+            </div>
+            <div class="field">
+              <label for="classExtra">Extra minutes for this class <span class="optional">(optional)</span></label>
+              <input type="number" id="classExtra" min="0" max="60" step="1" inputmode="numeric" placeholder="0" aria-describedby="classExtraHint" />
+              <p class="hint" id="classExtraHint">
+                For a room that's hard to find, a lecture hall where seats fill up early, or a long walk inside the
+                building. Added on top of the extra time in Settings.
+              </p>
+            </div>
+            <details class="field" id="classDates">
+              <summary>Only meets part of the semester?</summary>
+              <div class="row">
+                <div class="field">
+                  <label for="firstDay">First day</label>
+                  <input type="date" id="firstDay" />
+                </div>
+                <div class="field">
+                  <label for="lastDay">Last day</label>
+                  <input type="date" id="lastDay" />
+                </div>
+              </div>
+            </details>
+            <div class="row">
+              <button type="submit" class="btn accent" id="submitClass">Add class</button>
+              <button type="button" class="btn ghost" id="cancelEdit">Cancel</button>
+            </div>
+            <p class="form-error" id="formError" role="alert" hidden></p>
+            <p class="form-ok" id="formOk" role="status" hidden></p>
+          </form>
+        </div>
       </div>
     </dialog>
 
@@ -242,97 +251,111 @@
       <div class="dialog-head">
         <h2 id="settingsTitle">Settings</h2>
         <button type="button" class="dialog-close" id="closeSettings" aria-label="Close settings">&times;</button>
+        <div class="tabs" role="tablist" aria-label="Settings sections" id="settingsTabs">
+          <button type="button" role="tab" class="tab" id="tab-travel" aria-controls="settings-travel">Travel</button>
+          <button type="button" role="tab" class="tab" id="tab-weather" aria-controls="settings-weather">Weather</button>
+          <button type="button" role="tab" class="tab" id="tab-look" aria-controls="settings-look">Appearance</button>
+          <button type="button" role="tab" class="tab" id="tab-data" aria-controls="settings-data">Your data</button>
+        </div>
       </div>
       <div class="dialog-body">
-        <fieldset>
-          <legend>Walking pace</legend>
-          <div class="seg" id="paceChoices"></div>
-          <p class="hint" id="paceHint"></p>
-        </fieldset>
-        <fieldset>
-          <legend>Biking speed</legend>
-          <div class="seg" id="bikeSpeedChoices"></div>
-          <p class="hint" id="bikeHint"></p>
-        </fieldset>
-        <fieldset>
-          <legend>Extra time before class</legend>
-          <div class="seg" id="extraChoices"></div>
-          <p class="hint" id="extraHint"></p>
-        </fieldset>
-        <fieldset>
-          <legend>Weather</legend>
-          <div class="seg" id="weatherChoices"></div>
-          <p class="hint" id="weatherHint"></p>
-          <div class="weather-panel" id="weatherPanel" aria-live="polite"></div>
-        </fieldset>
-        <fieldset>
-          <legend>Weather warnings</legend>
-          <div class="seg" id="weatherWarningsChoices"></div>
-          <p class="hint">
-            A banner at the top of the app for official National Weather Service warnings for campus, and for
-            thunderstorms, ice, heavy snow, very strong wind, or dangerous cold or heat in the forecast for the next 12 hours.
-          </p>
-          <p class="hint warnings-status" id="warningsStatus" role="status"></p>
-          <button type="button" class="btn ghost" id="showHiddenWarnings" hidden>Show hidden warnings</button>
-        </fieldset>
-        <fieldset>
-          <legend>Appearance</legend>
-          <div class="seg" id="appearanceChoices"></div>
-        </fieldset>
-        <fieldset>
-          <legend>Accent colour</legend>
-          <div class="seg seg-wrap" id="accentChoices"></div>
-        </fieldset>
-        <fieldset>
-          <legend>Campus area</legend>
-          <div class="seg" id="campusRingChoices"></div>
-          <p class="hint">
-            A dashed ring on the map, 4 km around the Main Quad. Locations outside it (GPS or a pinned spot) are
-            refused.
-          </p>
-        </fieldset>
-        <fieldset>
-          <legend>Your places</legend>
-          <ul class="class-list places-list" id="placesList"></ul>
-        </fieldset>
-        <fieldset>
-          <legend>Your data</legend>
-          <p class="hint backup-hint">
-            Your schedule and settings are saved only in this browser. Download a backup to move them to another
-            computer, or to get them back if this browser's data is cleared.
-          </p>
-          <div class="row">
-            <button type="button" class="btn ghost" id="backupDownload">Download backup</button>
-            <label class="btn ghost file-btn">
-              Restore from backup
-              <input type="file" id="backupFile" accept=".json,application/json" />
-            </label>
-          </div>
-          <p id="backupMessage" role="status" hidden></p>
-          <div class="confirm-box" id="backupConfirm" hidden>
-            <p id="backupConfirmText"></p>
+        <section class="tab-panel" id="settings-travel" role="tabpanel" aria-labelledby="tab-travel" tabindex="0">
+          <fieldset>
+            <legend>Walking pace</legend>
+            <div class="seg" id="paceChoices"></div>
+            <p class="hint" id="paceHint"></p>
+          </fieldset>
+          <fieldset>
+            <legend>Biking speed</legend>
+            <div class="seg" id="bikeSpeedChoices"></div>
+            <p class="hint" id="bikeHint"></p>
+          </fieldset>
+          <fieldset>
+            <legend>Extra time before class</legend>
+            <div class="seg" id="extraChoices"></div>
+            <p class="hint" id="extraHint"></p>
+          </fieldset>
+          <fieldset>
+            <legend>Your places</legend>
+            <ul class="class-list places-list" id="placesList"></ul>
+          </fieldset>
+        </section>
+        <section class="tab-panel" id="settings-weather" role="tabpanel" aria-labelledby="tab-weather" tabindex="0">
+          <fieldset>
+            <legend>Weather</legend>
+            <div class="seg" id="weatherChoices"></div>
+            <p class="hint" id="weatherHint"></p>
+            <div class="weather-panel" id="weatherPanel" aria-live="polite"></div>
+          </fieldset>
+          <fieldset>
+            <legend>Weather warnings</legend>
+            <div class="seg" id="weatherWarningsChoices"></div>
+            <p class="hint">
+              A banner at the top for official National Weather Service warnings, and for storms, ice, heavy snow, strong
+              wind, or dangerous cold or heat in the next 12 hours.
+            </p>
+            <p class="hint warnings-status" id="warningsStatus" role="status"></p>
+            <button type="button" class="btn ghost" id="showHiddenWarnings" hidden>Show hidden warnings</button>
+          </fieldset>
+        </section>
+        <section class="tab-panel" id="settings-look" role="tabpanel" aria-labelledby="tab-look" tabindex="0">
+          <fieldset>
+            <legend>Theme</legend>
+            <div class="seg" id="appearanceChoices"></div>
+          </fieldset>
+          <fieldset>
+            <legend>Accent colour</legend>
+            <div class="seg seg-wrap" id="accentChoices"></div>
+          </fieldset>
+          <fieldset>
+            <legend>Campus area on the map</legend>
+            <div class="seg" id="campusRingChoices"></div>
+            <p class="hint">
+              A dashed ring on the map, 4 km around the Main Quad. Locations outside it (GPS or a pinned spot) are
+              refused.
+            </p>
+          </fieldset>
+        </section>
+        <section class="tab-panel" id="settings-data" role="tabpanel" aria-labelledby="tab-data" tabindex="0">
+          <fieldset>
+            <legend>Backup</legend>
+            <p class="hint backup-hint">
+              Your schedule and settings are saved only in this browser. Download a backup to move them to another
+              computer, or to get them back if this browser's data is cleared.
+            </p>
             <div class="row">
-              <button type="button" class="btn accent" id="backupReplace">Replace with backup</button>
-              <button type="button" class="btn ghost" id="backupCancel">Cancel</button>
+              <button type="button" class="btn ghost" id="backupDownload">Download backup</button>
+              <label class="btn ghost file-btn">
+                Restore from backup
+                <input type="file" id="backupFile" accept=".json,application/json" />
+              </label>
             </div>
-          </div>
-        </fieldset>
-        <fieldset>
-          <legend>Reset</legend>
-          <div class="reset-buttons">
-            <button type="button" class="btn danger" id="resetSettings">Reset settings</button>
-            <button type="button" class="btn danger" id="resetClasses">Remove classes</button>
-            <button type="button" class="btn danger" id="resetEverything">Reset everything</button>
-          </div>
-          <div class="confirm-box danger-box" id="resetConfirm" role="alertdialog" aria-labelledby="resetConfirmText" hidden>
-            <p id="resetConfirmText"></p>
-            <div class="row">
-              <button type="button" class="btn danger solid" id="resetYes">Yes, reset</button>
-              <button type="button" class="btn ghost" id="resetCancel">Cancel</button>
+            <p id="backupMessage" role="status" hidden></p>
+            <div class="confirm-box" id="backupConfirm" hidden>
+              <p id="backupConfirmText"></p>
+              <div class="row">
+                <button type="button" class="btn accent" id="backupReplace">Replace with backup</button>
+                <button type="button" class="btn ghost" id="backupCancel">Cancel</button>
+              </div>
             </div>
-          </div>
-          <p class="form-ok" id="resetMessage" role="status" hidden></p>
-        </fieldset>
+          </fieldset>
+          <fieldset class="reset-field">
+            <legend>Reset</legend>
+            <div class="reset-buttons">
+              <button type="button" class="btn ghost danger" id="resetSettings">Reset settings</button>
+              <button type="button" class="btn ghost danger" id="resetClasses">Remove classes</button>
+              <button type="button" class="btn ghost danger" id="resetEverything">Reset everything</button>
+            </div>
+            <div class="confirm-box danger-box" id="resetConfirm" role="alertdialog" aria-labelledby="resetConfirmText" hidden>
+              <p id="resetConfirmText"></p>
+              <div class="row">
+                <button type="button" class="btn danger solid" id="resetYes">Yes, reset</button>
+                <button type="button" class="btn ghost" id="resetCancel">Cancel</button>
+              </div>
+            </div>
+            <p class="form-ok" id="resetMessage" role="status" hidden></p>
+          </fieldset>
+        </section>
       </div>
     </dialog>
 
