@@ -25,9 +25,9 @@
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
-    />
-    <script type="module" crossorigin src="./assets/index-BcDS6eCK.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CZkYCvo6.css">
+    />
+    <script type="module" crossorigin src="./assets/index-CJCQPd9F.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-5w-IVxlM.css">
   </head>
   <body>
     <header class="topbar">
@@ -327,6 +327,17 @@
             <p class="hint" id="bikeHint"></p>
           </fieldset>
           <fieldset>
+            <legend id="stopWalkLabel">Farthest Walk to a Bus Stop</legend>
+            <div class="range-row">
+              <input type="range" id="stopWalkRange" aria-labelledby="stopWalkLabel" aria-describedby="stopWalkHint" />
+              <output id="stopWalkValue" for="stopWalkRange"></output>
+            </div>
+            <p class="hint" id="stopWalkHint">
+              In Bus mode, trips only use stops within this walk of where you start and of class. If no stop is that
+              close, the app shows the walk instead.
+            </p>
+          </fieldset>
+          <fieldset>
             <legend>Extra Time Before Class</legend>
             <div class="seg" id="extraChoices"></div>
             <p class="hint" id="extraHint"></p>
@@ -364,11 +375,11 @@
             <div class="seg seg-wrap" id="accentChoices"></div>
           </fieldset>
           <fieldset>
-            <legend>Campus Area on the Map</legend>
+            <legend>Area on the Map</legend>
             <div class="seg" id="campusRingChoices"></div>
             <p class="hint">
-              A dashed ring on the map, 4 km around the Main Quad. Locations outside it (GPS or a pinned spot) are
-              refused.
+              A dashed ring on the map, 10 km around the Main Quad, taking in Champaign, Urbana, and Savoy. Locations
+              outside it (GPS or a pinned spot) are refused.
             </p>
           </fieldset>
         </section>
@@ -414,6 +425,6 @@
         </section>
       </div>
     </dialog>
-
+
   </body>
 </html>
