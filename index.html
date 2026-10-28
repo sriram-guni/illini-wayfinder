@@ -26,8 +26,8 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
     />
-    <script type="module" crossorigin src="./assets/index-CRpyHP7r.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-5w-IVxlM.css">
+    <script type="module" crossorigin src="./assets/index-BEfazLHa.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-COlk65pA.css">
   </head>
   <body>
     <header class="topbar">
@@ -81,31 +81,13 @@
           </form>
           <p id="gpsStatus" role="status" hidden></p>
           <div class="stop-control" id="stopControl" hidden>
-            <div id="stopSummary"></div>
-            <form class="stop-form" id="stopForm" novalidate hidden>
-              <label for="stopSearch" id="stopFormLabel">Stop on the Way</label>
-              <div class="search stop-search">
-                <input
-                  type="search"
-                  id="stopSearch"
-                  placeholder="A café, building, or address"
-                  autocomplete="off"
-                  role="combobox"
-                  aria-autocomplete="list"
-                  aria-expanded="false"
-                  aria-controls="stopResults"
-                />
-                <ul id="stopResults" class="search-results" role="listbox" aria-label="Matching places" hidden></ul>
-              </div>
-              <div class="stop-form-row">
-                <label for="stopMinutes">Minutes There</label>
-                <input type="number" id="stopMinutes" min="0" max="60" step="1" inputmode="numeric" placeholder="10" />
-                <button type="submit" class="btn accent small-btn">Add Stop</button>
-                <button type="button" class="btn ghost small-btn" id="stopCancel">Cancel</button>
-              </div>
-              <p class="form-error" id="stopError" role="alert" hidden></p>
-              <p class="hint">Just for this trip. To stop every time, edit the class.</p>
-            </form>
+            <p class="section-label" id="stopHeading">Stops on the Way</p>
+            <div class="stop-scope" role="group" aria-labelledby="stopHeading">
+              <button type="button" class="stop-scope-btn" id="stopScopeEvery" aria-pressed="true">Every Time</button>
+              <button type="button" class="stop-scope-btn" id="stopScopeTrip" aria-pressed="false">This Trip Only</button>
+            </div>
+            <div id="stopEditor"></div>
+            <p class="hint stop-hint" id="stopScopeHint"></p>
           </div>
           <fieldset class="mode-field">
             <legend class="sr-only">How are you getting there?</legend>
@@ -255,28 +237,11 @@
               </p>
             </div>
             <div class="field">
-              <label for="classStopSearch">Stop on the Way <span class="optional">(optional)</span></label>
-              <div class="search stop-search">
-                <input
-                  type="search"
-                  id="classStopSearch"
-                  placeholder="A café, building, or address"
-                  autocomplete="off"
-                  role="combobox"
-                  aria-autocomplete="list"
-                  aria-expanded="false"
-                  aria-controls="classStopResults"
-                  aria-describedby="classStopHint"
-                />
-                <ul id="classStopResults" class="search-results" role="listbox" aria-label="Matching places" hidden></ul>
-              </div>
-              <div class="stop-minutes">
-                <label for="classStopMinutes">Minutes There</label>
-                <input type="number" id="classStopMinutes" min="0" max="60" step="1" inputmode="numeric" placeholder="10" />
-              </div>
-              <p class="hint" id="classStopHint">
-                Somewhere you stop every time, like coffee before class. The leave time includes getting there and
-                this long at the stop. You can skip it, or add a different one, for a single day on the front page.
+              <span class="field-label" id="classStopsLabel">Stops on the Way <span class="optional">(optional)</span></span>
+              <div id="classStops" role="group" aria-labelledby="classStopsLabel" aria-describedby="classStopsHint"></div>
+              <p class="hint" id="classStopsHint">
+                Places you stop every time, in order, like coffee before class. The leave time includes getting to each
+                one and the time there. You can change them for a single trip on the front page.
               </p>
             </div>
             <details class="field" id="classDates">
