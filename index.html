@@ -25,9 +25,9 @@
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap"
-    />
-    <script type="module" crossorigin src="./assets/index-Rr50DQHk.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CHmc3cEd.css">
+    />
+    <script type="module" crossorigin src="./assets/index-BcDS6eCK.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CZkYCvo6.css">
   </head>
   <body>
     <header class="topbar">
@@ -80,6 +80,33 @@
             <p class="hint">Drag the blue dot on the map to fine-tune the spot.</p>
           </form>
           <p id="gpsStatus" role="status" hidden></p>
+          <div class="stop-control" id="stopControl" hidden>
+            <div id="stopSummary"></div>
+            <form class="stop-form" id="stopForm" novalidate hidden>
+              <label for="stopSearch" id="stopFormLabel">Stop on the Way</label>
+              <div class="search stop-search">
+                <input
+                  type="search"
+                  id="stopSearch"
+                  placeholder="A café, building, or address"
+                  autocomplete="off"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-expanded="false"
+                  aria-controls="stopResults"
+                />
+                <ul id="stopResults" class="search-results" role="listbox" aria-label="Matching places" hidden></ul>
+              </div>
+              <div class="stop-form-row">
+                <label for="stopMinutes">Minutes There</label>
+                <input type="number" id="stopMinutes" min="0" max="60" step="1" inputmode="numeric" placeholder="10" />
+                <button type="submit" class="btn accent small-btn">Add Stop</button>
+                <button type="button" class="btn ghost small-btn" id="stopCancel">Cancel</button>
+              </div>
+              <p class="form-error" id="stopError" role="alert" hidden></p>
+              <p class="hint">Just for this trip. To stop every time, edit the class.</p>
+            </form>
+          </div>
           <fieldset class="mode-field">
             <legend class="sr-only">How are you getting there?</legend>
             <div class="seg" id="modeChoices"></div>
@@ -123,7 +150,7 @@
       Map, building locations, and paths © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>; map
       tiles by <a href="https://openfreemap.org/">OpenFreeMap</a> and <a href="https://openmaptiles.org/">OpenMapTiles</a>.
       Bus times from the Champaign-Urbana Mass Transit District's published schedule; they don't show live delays.
-      Address search by <a href="https://nominatim.org/">Nominatim</a>: only the address you search for is sent to it.
+      Map search by <a href="https://nominatim.org/">Nominatim</a>: only what you search for is sent to it, and only when you choose Search the Map.
       Weather forecast by <a href="https://open-meteo.com/">Open-Meteo.com</a> and warnings from the
       <a href="https://www.weather.gov/">National Weather Service</a>, for campus as a whole (your location is never sent).
       Your schedule is saved only in this browser.
@@ -225,6 +252,31 @@
               <p class="hint" id="classExtraHint">
                 For a room that's hard to find, a lecture hall where seats fill up early, or a long walk inside the
                 building. Added on top of the extra time in Settings.
+              </p>
+            </div>
+            <div class="field">
+              <label for="classStopSearch">Stop on the Way <span class="optional">(optional)</span></label>
+              <div class="search stop-search">
+                <input
+                  type="search"
+                  id="classStopSearch"
+                  placeholder="A café, building, or address"
+                  autocomplete="off"
+                  role="combobox"
+                  aria-autocomplete="list"
+                  aria-expanded="false"
+                  aria-controls="classStopResults"
+                  aria-describedby="classStopHint"
+                />
+                <ul id="classStopResults" class="search-results" role="listbox" aria-label="Matching places" hidden></ul>
+              </div>
+              <div class="stop-minutes">
+                <label for="classStopMinutes">Minutes There</label>
+                <input type="number" id="classStopMinutes" min="0" max="60" step="1" inputmode="numeric" placeholder="10" />
+              </div>
+              <p class="hint" id="classStopHint">
+                Somewhere you stop every time, like coffee before class. The leave time includes getting there and
+                this long at the stop. You can skip it, or add a different one, for a single day on the front page.
               </p>
             </div>
             <details class="field" id="classDates">
@@ -362,6 +414,6 @@
         </section>
       </div>
     </dialog>
-
+
   </body>
 </html>
